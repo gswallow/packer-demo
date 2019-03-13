@@ -4,31 +4,23 @@
   },
   "builders": [
     {
-      "type": "vmware-iso",
+      "type": "virtualbox-iso",
       "vm_name": "{{ user `vm_name` }}-{{ isotime `20060102.1504` }}",
       "iso_url": "{{ user `home` }}/{{ user `iso_location` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_interface": "sata",
       "headless": false,
-      "guest_os_type": "{{ user `vcenter_os_guest_type` }}",
-      "version": "{{ user `vm_hardware_version` }}",
+      "guest_os_type": "{{ user `guest_os_type` }}",
+      "guest_additions_mode": "attach",
+      "hard_drive_interface": "sata",
       "cpus": 2,
-      "cores": 1,
       "memory": 2048,
       "disk_size": "{{ user `disk_size` }}",
-      "disk_type_id": "{{ user `disk_type_id` }}",
-      "vmx_data": {
-        "scsi0.virtualDev": "lsisas1068"
-      },
-      "network": "{{ user `network` }}",
-      "network_adapter_type": "{{ user `network_adapter_type` }}",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "tools_upload_flavor": "windows",
       "floppy_files": [
         "{{user `auto_unattend`}}"
       ],
-      "vnc_port_min": 5900,
-      "vnc_port_max": 5980,
       "communicator": "winrm",
       "winrm_username": "{{ user `winrm_username` }}",
       "winrm_password": "{{ user `winrm_password` }}",
@@ -41,7 +33,7 @@
     {
       "name": "vagrant",
       "type": "vagrant",
-      "output": "{{ .BuildName }}_{{ .Provider }}.box"
+      "output": "{{ user `vm_name` }}_{{ isotime `20060102.1504` }}_{{ .Provider }}.box"
     }
   ]
 }
