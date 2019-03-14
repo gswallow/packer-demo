@@ -5,7 +5,7 @@
   "builders": [
     {
       "type": "virtualbox-iso",
-      "vm_name": "{{ user `vm_name` }}-{{ isotime `20060102.1504` }}",
+      "vm_name": "{{ user `os_version` }}-{{ user `os_arch` }}-{{ user `packer_stage` }}",
       "iso_url": "{{ user `home` }}/{{ user `iso_location` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
@@ -33,7 +33,17 @@
     {
       "name": "vagrant",
       "type": "vagrant",
-      "output": "{{ user `vm_name` }}_{{ isotime `20060102.1504` }}_{{ .Provider }}.box"
+      "output": "{{ user `os_version` }}-{{ .Provider }}.box",
+      "vagrantfile_template": "Vagrantfile.tpl"
+    },
+    {
+      "name": "help",
+      "type": "shell-local",
+      "inline": [
+        "echo To import as a vagrant box, run:",
+        "echo",
+        "echo vagrant box add {{ user `os_version` }} {{ user `os_version` }}-virtualbox.box"
+      ]
     }
   ]
 }
