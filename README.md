@@ -9,14 +9,34 @@ version control system and a CI/CD platform, you can predictably create *trusted
 benefits to using packer: you shorten the time to delivery for your infrastructure (most things are pre-baked), and 
 you eliminate random errors or discrepancies you'd encounter if you were still bulding VMs by hand (even following a script).
 
-If your organization is still carrying "gold images" around, then convert that practice to code.
+## Comparable practices
+
+Maybe your organization is still porting "gold images" forward. You know the drill:
+
+1. clone a VM from template.  Maybe rename the VM if it's going to do something special like have Perl installed.  Yes, really.
+1. customize or patch the new VM by logging in with the organizational root password, and run commands by hand.
+1. shut down the VM and convert it back to a template.
+
+This is a model for failure.  First, you have no version control mecahnisms where you can roll back, or at least assign blame.
+Second, you have introduced many avenues for human error.
+
+Or, maybe you've gone completely the opposite direction and you only use vanilla EC2 instances.  The procedure here is:
+
+1. fire up the new EC2 instance.  Maybe you do this by hand or maybe AWS Autoscaling does this for you.
+1. set up user-data to kick off Chef/Puppet/Ansible pull/Salt/etc.
+
+This is also a model for failure, in at least two ways.  First, bootstrapping new instances with a confiruation managemnt
+system is slow.  Second, continually configuring your boxes is highly susceptible to transient, network-related failures.
+
+Proper use of Packer mitigates these failures.  Combined with a test platform, you can create predictable boxes at
+regular intervals, cutting down on bootstrap time.
 
 ## What will we do today?
 
 Today, we will build a Windows Server 2019 image.  For free, we will create a Vagrant box from it.  We will 
 spin up the Vagrant box and show how easy it is to control the resulting Vagrant box.
 
-We may also spin up a VMware template on a vSphere cluster.  VMware is not free,  but ere's where the rubber hits 
+We may also spin up a VMware template on a vSphere cluster.  VMware is not free,  but here's where the rubber hits 
 the road.  By controlling your VMware templates as code, you can signficantly improve the predictability of how your 
 machines run.  Note that Packer doesn't just work with VMware.  It works with major cloud providers, too.
 
