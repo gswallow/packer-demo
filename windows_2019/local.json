@@ -1,12 +1,9 @@
 {
-  "variables": {
-    "home": "{{ env `HOME` }}"
-  },
   "builders": [
     {
       "type": "virtualbox-iso",
       "vm_name": "{{ user `os_version` }}-{{ user `os_arch` }}-{{ user `packer_stage` }}",
-      "iso_url": "{{ user `home` }}/{{ user `iso_location` }}",
+      "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_interface": "sata",
