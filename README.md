@@ -100,6 +100,10 @@ vagrant rdp
 vagrant destroy -f
 ```
 
+## Where next?
+
+See if you can use the [powershell][powershell] provisioner to install [bginfo][bginfo] on your own copy of the local packer template.
+
 ## VMware vSphere
 
 This demo is intended for an audience with a sizeable VMware vSphere infrastructure.  To build VM images on vSphere, we use Jetbrains's [packer-builder-vsphere][jetbrains] plugins.
@@ -118,6 +122,7 @@ packer build -var-file=$HOME/vsphere.vars vsphere.json
 
 vSphere will create a new VM, attach the Windows installer ISO to it, attach a floppy image containing an Autounattend.xml file to it (see the floppy.sh script in this repository), and go through an unattended install.  Note that you must install VMware Tools for this builder to succeed.  ESXi relies on VMware Tools to report your VM's IP address back to Packer.
 
+[bginfo]: https://docs.microsoft.com/en-us/sysinternals/downloads/bginfo
 [brew]: https://brew.sh
 [debian-installer-ref]: https://help.ubuntu.com/18.04/installation-guide/amd64/apb.html
 [jetbrains]: https://github.com/jetbrains-infra/packer-builder-vsphere
@@ -128,6 +133,7 @@ vSphere will create a new VM, attach the Windows installer ISO to it, attach a f
 [packer-download]: https://packer.io/downloads.html
 [packer-postprocessors]: https://www.packer.io/docs/post-processors/index.html
 [packer-provisioners]: https://packer.io/docs/provisioners/index.html
+[powershell]: https://packer.io/docs/provisioners/powershell.html
 [sheksha]: https://sheska.com/how-to-create-an-automated-install-for-windows-server-2019/
 [oracle virtualbox]: https://www.virtualbox.org/wiki/Downloads
 [rdp]: https://itunes.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12
