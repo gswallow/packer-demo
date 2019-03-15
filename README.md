@@ -1,6 +1,12 @@
 Packer demo
 ===========
 
+## Slides
+
+Slides are available [here][slides].  As of today (3/15/2019), this repository is a heavy work in progress.  Stay tuned.
+
+## This repository
+
 This Git repository is (hopefully) helpful if you've never used [Packer][packer].  Packer is a tool you can use to
 create VMware templates, AWS AMIs, Vagrant boxes, and other "gold-image" artifacts.
 
@@ -76,15 +82,42 @@ This machine will take some time to build.  The ISO to download is 4.2 GB in siz
 of installing and configuring Windows.  With luck, you'll get a Vagrant box from Packer.  There's a local-shell
 provisioner at the end of the build that tells you how to use the Vagrant box.
 
-## Vagrant Boxes
+## Running the Vagrant box
 
-Vagrantfile.tpl
+On a mac, `vagrant rdp` is buggy.  Be warned :)
+
+```bash
+cd $HOME
+mkdir demo
+cd demo
+vagrant init windows2019
+vagrant up
+vagrant winrm -c 'dir C:/windows/'
+vagrant rdp
+vagrant destroy -f
+```
 
 ## VMware vSphere
-https://github.com/jetbrains-infra/packer-builder-vsphere
+
+This demo is intended for an audience with a sizeable VMware vSphere infrastructure.  To build VM images on vSphere, we use Jetbrains's [packer-builder-vsphere][jetbrains] plugins.
+
+Using these plugins, you would set your `VSPHERE_USERNAME` and `VSPHERE_PASSWORD` environment variables, then supply a
+variables file that specifies all of your vSphere settings, including the vCenter server, the locations of your ISO and flloppy images, the networks on which you'll launch your new VM, etc.  Obviously, this file should never be checked into 
+Git:
+
+```bash
+export VSPHERE_USERNAME=vmware_dude
+read -s VSPHERE_PASSWORD
+# my super secret password
+export VSPHERE_PASSWORD
+packer build -var-file=$HOME/vsphere.vars vsphere.json
+```
+
+vSphere will create a new VM, attach the Windows installer ISO to it, attach a floppy image containing an Autounattend.xml file to it (see the floppy.sh script in this repository), and go through an unattended install.  Note that you must install VMware Tools for this builder to succeed.  ESXi relies on VMware Tools to report your VM's IP address back to Packer.
 
 [brew]: https://brew.sh
 [debian-installer-ref]: https://help.ubuntu.com/18.04/installation-guide/amd64/apb.html
+[jetbrains]: https://github.com/jetbrains-infra/packer-builder-vsphere
 [kickstart-ref]: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/installation_guide/chap-kickstart-installations
 [packer]: https://packer.io
 [packer-builders]: https://packer.io/docs/builders/index.html
@@ -94,6 +127,7 @@ https://github.com/jetbrains-infra/packer-builder-vsphere
 [packer-provisioners]: https://packer.io/docs/provisioners/index.html
 [sheksha]: https://sheska.com/how-to-create-an-automated-install-for-windows-server-2019/
 [oracle virtualbox]: https://www.virtualbox.org/wiki/Downloads
+[slides]: https://docs.google.com/presentation/d/1uoXa6XaKrI61iCpGVJoVLqVg_lH619hgjw1Nz-S0YkQ/edit?usp=sharing
 [unattended ref]: https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/
 [wsim ref]: https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/wsim/windows-system-image-manager-technical-reference
 [vagrant]: https://vagrantup.com
