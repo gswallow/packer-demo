@@ -1,0 +1,46 @@
+{
+  "variables": {
+    "vsphere_username": "{{ env `VSPHERE_USERNAME` }}",
+    "vsphere_password": "{{ env `VSPHERE_PASSWORD` }}"
+  },
+  "sensitive-variables": [
+    "vsphere_username",
+    "vsphere_password"
+  ],
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "vcenter_server": "{{ user `vcenter_server` }}",
+      "username": "{{ user `vsphere_username` }}",
+      "password": "{{ user `vsphere_password` }}",
+      "insecure_connection": true,
+      "datacenter": "{{ user `vcenter_datacenter` }}",
+      "cluster": "{{ user `vcenter_cluster` }}",
+      "datastore": "{{ user `vcenter_datastore`}}",
+      "vm_name": "{{ user `os_version` }}-{{ user `os_arch` }}-{{ user `packer_stage` }}-latest",
+      "guest_os_type": "{{ user `vm_os_guest_type` }}",
+      "folder": "{{ user `vm_folder` }}",
+      "CPUs": "{{ user `vm_cpus` }}",
+      "RAM": "{{ user `vm_memory` }}",
+      "disk_controller_type": "{{ user `vm_controller_type` }}",
+      "disk_size": "{{ user `vm_disk_size` }}",
+      "disk_thin_provisioned": "{{ user `vm_disk_thin_provisioned` }}",
+      "network": "{{ user `vcenter_network` }}",
+      "network_card": "{{ user `vm_network_card` }}",
+      "boot_order": "cdrom,disk",
+      "iso_paths": [ "{{ user `iso_paths` }}" ],
+      "floppy_img_path": "{{ user `floppy_img_path` }}",
+      "configuration_parameters": {
+        "scsi0.virtualDev": "lsisas1068"
+      },
+      "convert_to_template": true,
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "communicator": "winrm",
+      "winrm_username": "{{ user `winrm_username` }}",
+      "winrm_password": "{{ user `winrm_password` }}",
+      "winrm_timeout": "60m",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true
+    }
+  ]
+}
