@@ -16,6 +16,8 @@ benefits to using packer: you shorten the time to delivery for your infrastructu
 pre-baked), and you eliminate random errors or discrepancies you'd encounter if you were still building VMs by 
 hand (even following, or copy-pasting, a script).
 
+You don't need Git to use this repository.  You can mash the "Clone or Download" button, and choose to download it to your local machine.  I'm a mac user, so working on Mac or Linux is going to be a huge help.  If you work in Windows, feel free to submit a pull request with instructions for Windows users.
+
 ## Building images is not easy
 
 Packer is an easy tool to use, but the process of automating operating system installs is **NOT** easy.  While you're working with Packer, you will encounter many quirks with each OS installer.  You will also probably encounter many quirks with different hypervisors, and even cloud providers as you go along.
