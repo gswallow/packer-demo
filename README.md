@@ -44,6 +44,7 @@ To go through the simplest demo in this tutorial, you need:
 - [Oracle VirtualBox][oracle virtualbox]
 - [Packer][packer-download]
 - [Vagrant][vagrant-download]
+- Microsoft's [remote desktop][rdp] client
 
 On OS X, install with [homebrew][brew]:
 
@@ -129,6 +130,7 @@ vSphere will create a new VM, attach the Windows installer ISO to it, attach a f
 [packer-provisioners]: https://packer.io/docs/provisioners/index.html
 [sheksha]: https://sheska.com/how-to-create-an-automated-install-for-windows-server-2019/
 [oracle virtualbox]: https://www.virtualbox.org/wiki/Downloads
+[rdp]: https://itunes.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12
 [slides]: https://docs.google.com/presentation/d/1uoXa6XaKrI61iCpGVJoVLqVg_lH619hgjw1Nz-S0YkQ/edit?usp=sharing
 [unattended ref]: https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/
 [wsim ref]: https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/wsim/windows-system-image-manager-technical-reference
